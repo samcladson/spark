@@ -7,6 +7,7 @@ import {
   loadFaceRecognitionModel,
   loadSsdMobilenetv1Model,
 } from "face-api.js";
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 Promise.all([
   loadSsdMobilenetv1Model("/models"),

@@ -1,9 +1,19 @@
 import "./App.css";
+import Home from "./components/home";
 import Video from "./components/Webcam";
+import {
+  BrowserRouter as Router,
+  Route,
+} from "react-router-dom";
+
 const App = () => {
   return (
     <div className="App">
-      <Video />
+      <Router>
+        <Route component={Home} path="/"  exact/>
+        <Route component={Video} path="/Video/:id" exact/>
+      </Router>
+      
     </div>
   );
 };
