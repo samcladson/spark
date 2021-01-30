@@ -1,9 +1,9 @@
 import "./App.css";
-import Video from "./components/Webcam";
+import Home from "./components/Home";
 const App = () => {
   return (
     <div className="App">
-      <Video />
+      <Home />
     </div>
   );
 };
