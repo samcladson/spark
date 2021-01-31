@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Row,
   Col,
@@ -11,13 +11,9 @@ import {
   AutoComplete,
 } from "antd";
 
-import axios from "axios";
-import apis from "../config/ApiConfig";
-import Timer from "../utilities/SaveTimer";
-
-const Details = ({ isDrawerOpen, setIsDrawerOpen, staff }) => {
-  const [staffNameList, setStaffNameList] = useState();
+const Details = ({ staff, isDrawerOpen, setIsDrawerOpen, staffNameList }) => {
   const [options, setOptions] = useState();
+  const [count, setCount] = useState(5);
   const [selectStaffName, setSelectStaffName] = useState();
 
   const searchOption = (value) => {
@@ -31,70 +27,59 @@ const Details = ({ isDrawerOpen, setIsDrawerOpen, staff }) => {
     setSelectStaffName(value);
   };
 
-  useEffect(() => {
-    axios
-      .get(apis.url + "getName")
-      .then((res) => {
-        if (res.status === 200) {
-          var stafflist = [];
-
-          const list = res.data.staffName;
-          list.map((staff) => {
-            const obj = {};
-            obj["value"] = staff;
-            stafflist.push(obj);
-          });
-          setStaffNameList(stafflist);
-        }
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
   return staff ? (
     <Drawer
-      width={650}
+      style={{ position: "absolute" }}
+      getContainer={false}
+      width={350}
+      mask={false}
       placement="right"
-      closable={true}
+      closable={false}
       onClose={() => setIsDrawerOpen(false)}
       visible={isDrawerOpen}
     >
-      <Row>
-        <Col span={12}>
-          <Image width={120} height="auto" src={staff.img} />
-        </Col>
-        <Col span={12}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "c",
+        }}
+      >
+        <Image width={75} height="auto" src={staff.img} />
+        <div>
           <h1>{staff.Name}</h1>
-          <h3>Computer Science And Engineering</h3>
           <div style={style.retake}>
-            <h2 style={{ marginTop: 10, marginRight: 10 }}>Not You?</h2>
+            <h2 style={{ margin: 10 }}>Not You?</h2>
             <Button type="primary" size="large" danger>
               Retake
             </Button>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <Divider />
-      <Row style={style.timerContainer}>
-        <Col span={12}>
-          <h2>Attendance will be marked in..</h2>
-        </Col>
-        <Col span={12}>
-          <Timer
-            isDrawerOpen={isDrawerOpen}
-            setIsDrawerOpen={setIsDrawerOpen}
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <Row>
+      <h3 style={{ textAlign: "start" }}>Enter Manually</h3>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <AutoComplete
-          style={{ width: "100%" }}
+          size="large"
+          style={{ width: "70%" }}
           placeholder="Enter your name.."
           onSearch={searchOption}
           onSelect={handleInput}
           options={options}
         />
-      </Row>
+        <Button style={{ width: "25%" }} type="primary" size="large">
+          Submit
+        </Button>
+      </div>
+      <div style={{ textAlign: "start" }}>
+        <h3>Attendance will be marked in..{count}</h3>
+      </div>
     </Drawer>
   ) : null;
 };

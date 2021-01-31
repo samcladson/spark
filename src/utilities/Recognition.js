@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as faceapi from "face-api.js";
-
 import { retake } from "./VideoConfig";
+import { Modal, Image, Space, Button } from "antd";
 
 var detectedFace = null;
 
@@ -46,12 +46,17 @@ export const Recognition = (
             .then((res) => {
               if (res.status === 200) {
                 setStaff(res.data);
+                // Modal.success({
+                //   centered: true,
+                //   width: 500,
+                //   icon: null,
+                //   centered: true,
+                //   content: <Details data={res.data} />,
+                // });
+                setIsDrawerOpen(true);
               }
             })
-            .then(() => retake(setProgressValue, setStatus))
-            .then(() => {
-              setIsDrawerOpen(true);
-            });
+            .then(() => retake(setProgressValue, setStatus));
         }
 
         // canvas.getContext("2d").clearRect(0, 0, video.width, video.height);
@@ -82,3 +87,27 @@ export const Recognition = (
     }
   }, 1000);
 };
+
+// const Details = ({ data }) => {
+//   return (
+//     <div
+//       style={{
+//         width: "100%",
+//         display: "flex",
+//         justifyContent: "space-around",
+//         alignItems: "center",
+//       }}
+//     >
+//       <Image width={80} height="auto" src={data.img} />
+//       <div>
+//         <h1>{data.Name}</h1>
+//         <Space>
+//           <h2>Not You?</h2>
+//           <Button type="primary" danger>
+//             Retake
+//           </Button>
+//         </Space>
+//       </div>
+//     </div>
+//   );
+// };

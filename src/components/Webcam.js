@@ -1,10 +1,19 @@
 import React from "react";
 import Canvas from "../utilities/Canvas";
-import { Space, Card, Image, Typography } from "antd";
+import Details from "../components/Details";
+import { Space, Card, Image, Typography, Drawer } from "antd";
 
 const { Title } = Typography;
 
-const Webcam = ({ entry, isVideoPLaying, progressValue }) => {
+const Webcam = ({
+  entry,
+  isVideoPLaying,
+  progressValue,
+  staff,
+  isDrawerOpen,
+  setIsDrawerOpen,
+  staffNameList,
+}) => {
   return (
     <Space direction="vertical" style={style.constainer}>
       {isVideoPLaying ? (
@@ -19,7 +28,7 @@ const Webcam = ({ entry, isVideoPLaying, progressValue }) => {
           ) : null}
           <Card style={style.card}>
             <video style={style.video} width={500} height={375} />
-            <Canvas />
+            {/* <Canvas /> */}
             {progressValue > 50 && progressValue < 95 ? (
               <div style={style.info}>
                 <h2 style={{ color: "white" }}>
@@ -28,6 +37,12 @@ const Webcam = ({ entry, isVideoPLaying, progressValue }) => {
                 </h2>
               </div>
             ) : null}
+            <Details
+              staff={staff}
+              isDrawerOpen={isDrawerOpen}
+              setIsDrawerOpen={setIsDrawerOpen}
+              staffNameList={staffNameList}
+            />
           </Card>
           {/* <Card style={style.card}>
             <h1>hello</h1>
@@ -55,6 +70,7 @@ const style = {
     width: 500,
     height: 375,
     boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
+    overflow: "hidden",
   },
   video: {
     position: "absolute",

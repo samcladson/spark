@@ -16,7 +16,7 @@ const style = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
+    boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px",
   },
 };
 export default Header;

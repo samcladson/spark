@@ -12,6 +12,7 @@ const Controls = ({
   setEntry,
   setStaff,
   setStatus,
+  setModalVisible,
 }) => {
   return (
     <div style={style.container}>
@@ -54,7 +55,8 @@ const Controls = ({
                       setIsDrawerOpen,
                       setProgressValue,
                       setStaff,
-                      setStatus
+                      setStatus,
+                      setModalVisible
                     )
                   : null,
               ]}
@@ -78,7 +80,8 @@ const Controls = ({
                       setIsDrawerOpen,
                       setProgressValue,
                       setStaff,
-                      setStatus
+                      setStatus,
+                      setModalVisible
                     )
                   : null,
               ]}
