@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import {
-  Row,
-  Col,
-  Drawer,
-  Image,
-  Timeline,
-  Divider,
-  Button,
-  Space,
-  AutoComplete,
-} from "antd";
+import React, { useState, useEffect } from "react";
+import { Drawer, Image, Divider, Button, AutoComplete } from "antd";
 
-const Details = ({ staff, isDrawerOpen, setIsDrawerOpen, staffNameList }) => {
+import { countdown, stopCountDown } from "../utilities/Timer";
+import { retake } from "../utilities/VideoConfig";
+import { SaveEntry } from "../utilities/SaveEntry";
+
+const Details = ({
+  staff,
+  setStaff,
+  entry,
+  isDrawerOpen,
+  setIsDrawerOpen,
+  staffNameList,
+}) => {
   const [options, setOptions] = useState();
   const [count, setCount] = useState(5);
-  const [selectStaffName, setSelectStaffName] = useState();
+  const [manualEntry, setManualEntry] = useState(false);
 
   const searchOption = (value) => {
     var opt = staffNameList.filter((staff) =>
@@ -24,8 +25,27 @@ const Details = ({ staff, isDrawerOpen, setIsDrawerOpen, staffNameList }) => {
   };
 
   const handleInput = (value) => {
-    setSelectStaffName(value);
+    setStaff({
+      Name: value,
+      img:
+        "https://cdn4.iconfinder.com/data/icons/business-square-gradient-shadow-2/512/xxx012-512.png",
+    });
   };
+
+  const enterManualy = () => {
+    stopCountDown();
+  };
+
+  const submitEntry = () => {
+    SaveEntry(staff, entry);
+    retake("normal");
+  };
+
+  useEffect(() => {
+    if (staff.Name !== "Unknown") {
+      countdown(setCount, staff, entry);
+    }
+  }, []);
 
   return staff ? (
     <Drawer
@@ -48,16 +68,24 @@ const Details = ({ staff, isDrawerOpen, setIsDrawerOpen, staffNameList }) => {
         <Image width={75} height="auto" src={staff.img} />
         <div>
           <h1>{staff.Name}</h1>
+
           <div style={style.retake}>
-            <h2 style={{ margin: 10 }}>Not You?</h2>
-            <Button type="primary" size="large" danger>
+            {staff.Name !== "Unknown" ? (
+              <h2 style={{ margin: 10 }}>Not You?</h2>
+            ) : null}
+            <Button
+              block={staff.Name === "Unknown" ? true : false}
+              type="primary"
+              size="large"
+              danger
+              onClick={() => retake("error")}
+            >
               Retake
             </Button>
           </div>
         </div>
       </div>
       <Divider />
-      <h3 style={{ textAlign: "start" }}>Enter Manually</h3>
       <div
         style={{
           display: "flex",
@@ -65,21 +93,54 @@ const Details = ({ staff, isDrawerOpen, setIsDrawerOpen, staffNameList }) => {
           alignItems: "center",
         }}
       >
-        <AutoComplete
-          size="large"
-          style={{ width: "70%" }}
-          placeholder="Enter your name.."
-          onSearch={searchOption}
-          onSelect={handleInput}
-          options={options}
-        />
-        <Button style={{ width: "25%" }} type="primary" size="large">
-          Submit
-        </Button>
+        {manualEntry ? (
+          <>
+            <AutoComplete
+              size="large"
+              style={{ width: "70%" }}
+              placeholder="Enter your name.."
+              onSearch={searchOption}
+              onSelect={handleInput}
+              options={options}
+            />
+            <Button
+              onClick={() => submitEntry()}
+              style={{ width: "25%" }}
+              type="primary"
+              size="large"
+            >
+              Submit
+            </Button>
+          </>
+        ) : (
+          <Button
+            type="primary"
+            size="large"
+            block
+            onClick={() => [setManualEntry(true), enterManualy()]}
+          >
+            Enter Manually
+          </Button>
+        )}
       </div>
-      <div style={{ textAlign: "start" }}>
-        <h3>Attendance will be marked in..{count}</h3>
-      </div>
+      <Divider style={{ margin: 15 }} />
+      {staff.Name !== "Unknown" ? (
+        <div style={{ textAlign: "start" }}>
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h2>Saving Entry in..</h2>
+
+            <h1 style={{ color: "green", fontSize: 42 }}>
+              <b>{count}</b>
+            </h1>
+          </span>
+        </div>
+      ) : null}
     </Drawer>
   ) : null;
 };

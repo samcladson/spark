@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as faceapi from "face-api.js";
-import { retake } from "./VideoConfig";
-import { Modal, Image, Space, Button } from "antd";
+import { stopDetection } from "./VideoConfig";
 
 var detectedFace = null;
 
@@ -11,13 +10,13 @@ export const clearVariable = () => {
 
 export const Recognition = (
   video,
-  canvas,
+  // canvas,
   setIsDrawerOpen,
   setProgressValue,
   setStaff,
   setStatus
 ) => {
-  setStatus(1);
+  setStatus(0);
   return setInterval(async () => {
     let detection = await faceapi
       .detectSingleFace(video)
@@ -37,7 +36,7 @@ export const Recognition = (
         setProgressValue(Math.round(detection.detection._score * 100));
         if (detection.detection._score > 0.95) {
           setProgressValue(100);
-          setStatus(2);
+          setStatus(1);
           detectedFace = Array.from(detection.descriptor);
           axios
             .post("https://face-recognition-siet.herokuapp.com/face", {
@@ -46,17 +45,21 @@ export const Recognition = (
             .then((res) => {
               if (res.status === 200) {
                 setStaff(res.data);
-                // Modal.success({
-                //   centered: true,
-                //   width: 500,
-                //   icon: null,
-                //   centered: true,
-                //   content: <Details data={res.data} />,
-                // });
-                setIsDrawerOpen(true);
+              } else {
+                setStaff({ Name: "Unknown", img: "error" });
               }
             })
-            .then(() => retake(setProgressValue, setStatus));
+            .then(() => setIsDrawerOpen(true))
+            .then(() => stopDetection(setProgressValue, setStatus))
+            .catch(() => {
+              setStaff({
+                Name: "Unknown",
+                img:
+                  "https://cdn4.iconfinder.com/data/icons/business-square-gradient-shadow-2/512/xxx012-512.png",
+              });
+              setStatus(4);
+              setIsDrawerOpen(true);
+            });
         }
 
         // canvas.getContext("2d").clearRect(0, 0, video.width, video.height);

@@ -1,6 +1,14 @@
 import { clearVariable, Recognition } from "./Recognition";
+import { stopCountDown } from "./Timer";
 
 var loop = null;
+
+const functions = {
+  isDrawerOpen: null,
+  progressValue: null,
+  staff: null,
+  status: null,
+};
 
 export const startVideo = (
   setIsVideoPlaying,
@@ -9,12 +17,16 @@ export const startVideo = (
   setStaff,
   setStatus
 ) => {
+  // function allocation
+  functions.isDrawerOpen = setIsDrawerOpen;
+  functions.progressValue = setProgressValue;
+  functions.staff = setStaff;
+  functions.status = setStatus;
+
   setIsVideoPlaying(true);
   setTimeout(() => {
     const video = document.querySelector("video");
-    const canvas = document.querySelector("canvas");
-    video.width = 500;
-    video.height = 375;
+    // const canvas = document.querySelector("canvas");
 
     navigator.getUserMedia(
       { video: {}, audio: false },
@@ -23,7 +35,7 @@ export const startVideo = (
     );
     loop = Recognition(
       video,
-      canvas,
+      // canvas,
       setIsDrawerOpen,
       setProgressValue,
       setStaff,
@@ -40,23 +52,52 @@ export const stopVideo = (
   setStaff,
   setStatus
 ) => {
+  // function allocation
+
   const video = document.querySelector("video");
   video.srcObject.getTracks().forEach((track) => {
     track.stop();
   });
   clearVariable();
+  stopCountDown();
   clearInterval(loop);
   setIsDrawerOpen(false);
   setProgressValue(0);
   setIsVideoPlaying(false);
   setEntry(undefined);
   setStaff(undefined);
-  setStatus(0);
+  setStatus(-1);
 };
 
-export const retake = (setProgressValue, setStatus) => {
+export const stopDetection = (setProgressValue) => {
   setProgressValue(0);
-  setStatus(3);
   clearInterval(loop);
   return true;
+};
+
+export const retake = (data) => {
+  clearInterval(loop);
+  clearVariable();
+  stopCountDown();
+  functions.isDrawerOpen(false);
+  functions.progressValue(0);
+  functions.staff(undefined);
+  if (data === "normal") {
+    functions.status(2);
+  }
+  setTimeout(() => {
+    if (data === "normal") {
+      functions.status(3);
+    }
+    const video = document.querySelector("video");
+    // const canvas = document.querySelector("canvas");
+    loop = Recognition(
+      video,
+      // canvas,
+      functions.isDrawerOpen,
+      functions.progressValue,
+      functions.staff,
+      functions.status
+    );
+  }, 2000);
 };

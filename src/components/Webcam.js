@@ -1,7 +1,7 @@
 import React from "react";
-import Canvas from "../utilities/Canvas";
+// import Canvas from "../utilities/Canvas";
 import Details from "../components/Details";
-import { Space, Card, Image, Typography, Drawer } from "antd";
+import { Space, Card, Image, Typography } from "antd";
 
 const { Title } = Typography;
 
@@ -10,6 +10,7 @@ const Webcam = ({
   isVideoPLaying,
   progressValue,
   staff,
+  setStaff,
   isDrawerOpen,
   setIsDrawerOpen,
   staffNameList,
@@ -37,16 +38,17 @@ const Webcam = ({
                 </h2>
               </div>
             ) : null}
-            <Details
-              staff={staff}
-              isDrawerOpen={isDrawerOpen}
-              setIsDrawerOpen={setIsDrawerOpen}
-              staffNameList={staffNameList}
-            />
+            {staff ? (
+              <Details
+                staff={staff}
+                setStaff={setStaff}
+                entry={entry}
+                isDrawerOpen={isDrawerOpen}
+                setIsDrawerOpen={setIsDrawerOpen}
+                staffNameList={staffNameList}
+              />
+            ) : null}
           </Card>
-          {/* <Card style={style.card}>
-            <h1>hello</h1>
-          </Card> */}
         </Space>
       ) : (
         <Image

@@ -11,24 +11,33 @@ const Progress = ({ status }) => {
         <p>Wait untill all the process is executed!</p>
       </Space>
       <Divider />
-      <Steps direction="vertical" current={status} style={style.steps}>
+      <Steps
+        size="default"
+        direction="vertical"
+        current={status}
+        style={style.steps}
+      >
         <Step
-          status={status > 0 ? "finish" : "wait"}
+          status={status < 0 ? "wait" : status === 0 ? "process" : "finish"}
           title="Detecting Face"
           description="Please keep your face still."
         />
         <Step
-          status={status > 1 ? "finish" : "wait"}
+          status={
+            status < 1
+              ? "wait"
+              : status === 1
+              ? "process"
+              : status === 4
+              ? "error"
+              : "finish"
+          }
           title="Verifing"
           description="Wait till we verify you"
         />
-        {/* <Step
-          status={status > 2 ? "finish" : "wait"}
-          title="Confriming"
-          description="Waiting for your comfirmation"
-        /> */}
+
         <Step
-          status={status > 2 ? "finish" : "wait"}
+          status={status < 2 ? "wait" : status === 2 ? "process" : "finish"}
           title="Done"
           description="Have a great day!"
         />

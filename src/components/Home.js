@@ -16,7 +16,7 @@ const Home = () => {
   const [isVideoPLaying, setIsVideoPlaying] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
   const [entry, setEntry] = useState(undefined);
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(-1);
   const [staffNameList, setStaffNameList] = useState();
 
   useEffect(() => {
@@ -56,6 +56,7 @@ const Home = () => {
             isVideoPLaying={isVideoPLaying}
             progressValue={progressValue}
             staff={staff}
+            setStaff={setStaff}
             isDrawerOpen={isDrawerOpen}
             setIsDrawerOpen={setIsDrawerOpen}
             staffNameList={staffNameList}
