@@ -37,7 +37,13 @@ const Progress = ({ status }) => {
         />
 
         <Step
-          status={status < 2 ? "wait" : status === 2 ? "process" : "finish"}
+          status={
+            status < 2 || status === 4
+              ? "wait"
+              : status === 2
+              ? "process"
+              : "finish"
+          }
           title="Done"
           description="Have a great day!"
         />
