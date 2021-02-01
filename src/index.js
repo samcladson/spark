@@ -13,6 +13,4 @@ Promise.all([
   loadSsdMobilenetv1Model("/models"),
   loadFaceRecognitionModel("/models"),
   loadFaceLandmarkModel("/models"),
-]).then(() => console.log("loaded"));
-
-ReactDOM.render(<App />, document.getElementById("root"));
+]).then(() => ReactDOM.render(<App />, document.getElementById("root")));
