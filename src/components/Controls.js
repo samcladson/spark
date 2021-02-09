@@ -2,18 +2,13 @@ import React from "react";
 import { Progress, Space, Button, Divider } from "antd";
 
 import { startVideo, stopVideo } from "../utilities/VideoConfig";
+import { checkIn, checkOut, clearEntry } from "../action/entryAction";
+import { useSelector } from "react-redux";
 
-const Controls = ({
-  progressValue,
-  setProgressValue,
-  isVideoPlaying,
-  setIsVideoPlaying,
-  setIsDrawerOpen,
-  setEntry,
-  setStaff,
-  setStatus,
-  setModalVisible,
-}) => {
+const Controls = () => {
+  const isVideoPlaying = useSelector((state) => state.Webcam);
+  const progressValue = useSelector((state) => state.Progress);
+
   return (
     <div style={style.container}>
       <h2>Controls</h2>
@@ -28,16 +23,7 @@ const Controls = ({
             danger
             size="large"
             style={{ width: "100%" }}
-            onClick={() =>
-              stopVideo(
-                setIsVideoPlaying,
-                setIsDrawerOpen,
-                setProgressValue,
-                setEntry,
-                setStaff,
-                setStatus
-              )
-            }
+            onClick={() => [clearEntry(), stopVideo()]}
           >
             Close
           </Button>
@@ -47,19 +33,7 @@ const Controls = ({
               type="primary"
               size="large"
               width={250}
-              onClick={() => [
-                setEntry("CheckIn"),
-                !isVideoPlaying
-                  ? startVideo(
-                      setIsVideoPlaying,
-                      setIsDrawerOpen,
-                      setProgressValue,
-                      setStaff,
-                      setStatus,
-                      setModalVisible
-                    )
-                  : null,
-              ]}
+              onClick={() => [checkIn(), !isVideoPlaying ? startVideo() : null]}
             >
               Check In
             </Button>
@@ -73,17 +47,8 @@ const Controls = ({
               }}
               width={250}
               onClick={() => [
-                setEntry("CheckOut"),
-                !isVideoPlaying
-                  ? startVideo(
-                      setIsVideoPlaying,
-                      setIsDrawerOpen,
-                      setProgressValue,
-                      setStaff,
-                      setStatus,
-                      setModalVisible
-                    )
-                  : null,
+                checkOut(),
+                !isVideoPlaying ? startVideo() : null,
               ]}
             >
               Check Out

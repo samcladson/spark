@@ -1,20 +1,16 @@
 import React from "react";
-// import Canvas from "../utilities/Canvas";
 import Details from "../components/Details";
 import { Space, Card, Image, Typography } from "antd";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 
-const Webcam = ({
-  entry,
-  isVideoPLaying,
-  progressValue,
-  staff,
-  setStaff,
-  isDrawerOpen,
-  setIsDrawerOpen,
-  staffNameList,
-}) => {
+const Webcam = () => {
+  const entry = useSelector((state) => state.Entry);
+  const isVideoPLaying = useSelector((state) => state.Webcam);
+  const staff = useSelector((state) => state.Staff);
+  const progressValue = useSelector((state) => state.Progress);
+
   return (
     <Space direction="vertical" style={style.constainer}>
       {isVideoPLaying ? (
@@ -29,7 +25,6 @@ const Webcam = ({
           ) : null}
           <Card style={style.card}>
             <video style={style.video} width={500} height={375} />
-            {/* <Canvas /> */}
             {progressValue > 50 && progressValue < 95 ? (
               <div style={style.info}>
                 <h2 style={{ color: "white" }}>
@@ -38,16 +33,7 @@ const Webcam = ({
                 </h2>
               </div>
             ) : null}
-            {staff ? (
-              <Details
-                staff={staff}
-                setStaff={setStaff}
-                entry={entry}
-                isDrawerOpen={isDrawerOpen}
-                setIsDrawerOpen={setIsDrawerOpen}
-                staffNameList={staffNameList}
-              />
-            ) : null}
+            {staff ? <Details /> : null}
           </Card>
         </Space>
       ) : (

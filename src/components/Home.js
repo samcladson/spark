@@ -9,16 +9,9 @@ import Header from "./Header";
 import Controls from "./Controls";
 
 import apis from "../config/ApiConfig";
+import { clearStaffList, setStaffList } from "../action/staffListAction";
 
 const Home = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [staff, setStaff] = useState(undefined);
-  const [isVideoPLaying, setIsVideoPlaying] = useState(false);
-  const [progressValue, setProgressValue] = useState(0);
-  const [entry, setEntry] = useState(undefined);
-  const [status, setStatus] = useState(-1);
-  const [staffNameList, setStaffNameList] = useState();
-
   useEffect(() => {
     axios
       .get(apis.url + "getName")
@@ -32,10 +25,12 @@ const Home = () => {
             obj["value"] = staff;
             stafflist.push(obj);
           });
-          setStaffNameList(stafflist);
+          setStaffList(stafflist);
         }
       })
       .catch((err) => console.error(err));
+
+    return () => clearStaffList(null);
   }, []);
 
   return (
@@ -48,31 +43,13 @@ const Home = () => {
         align="middle"
       >
         <Col sm={24} md={6}>
-          <Progress status={status} />
+          <Progress />
         </Col>
         <Col sm={24} md={12}>
-          <Video
-            entry={entry}
-            isVideoPLaying={isVideoPLaying}
-            progressValue={progressValue}
-            staff={staff}
-            setStaff={setStaff}
-            isDrawerOpen={isDrawerOpen}
-            setIsDrawerOpen={setIsDrawerOpen}
-            staffNameList={staffNameList}
-          />
+          <Video />
         </Col>
         <Col sm={24} md={6}>
-          <Controls
-            progressValue={progressValue}
-            setProgressValue={setProgressValue}
-            isVideoPlaying={isVideoPLaying}
-            setIsVideoPlaying={setIsVideoPlaying}
-            setIsDrawerOpen={setIsDrawerOpen}
-            setEntry={setEntry}
-            setStaff={setStaff}
-            setStatus={setStatus}
-          />
+          <Controls />
         </Col>
       </Row>
     </div>

@@ -1,9 +1,11 @@
 import React from "react";
 import { Space, Steps, Divider } from "antd";
+import { useSelector } from "react-redux";
 
 const { Step } = Steps;
 
-const Progress = ({ status }) => {
+const Progress = () => {
+  const status = useSelector((state) => state.Status);
   return (
     <div style={style.container}>
       <Space direction="vertical" wrap>
