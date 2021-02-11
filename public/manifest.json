@@ -1,11 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App SIET-Staff-Management",
+  "short_name": "Staff Management",
+  "name": "Spark",
   "icons": [
     {
       "src": "sietlogo.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "sizes": "200x200",
+      "type": "image/png"
+    },
+    {
+      "src": "noconnection.gif",
+      "sizes": "800x600",
+      "type": "image/*"
     }
   ],
   "start_url": ".",

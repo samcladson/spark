@@ -15,11 +15,10 @@ Promise.all([
   loadSsdMobilenetv1Model("/models"),
   loadFaceRecognitionModel("/models"),
   loadFaceLandmarkModel("/models"),
-]).then(() =>
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById("root")
-  )
+]);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
 );

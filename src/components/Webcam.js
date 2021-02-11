@@ -16,7 +16,7 @@ const Webcam = () => {
       {isVideoPLaying ? (
         <Space
           direction="vertical"
-          style={{ width: "100%", textAlign: "center" }}
+          style={{ width: "90%", textAlign: "center" }}
         >
           {entry ? (
             <Title level={3} type="secondary">
@@ -39,6 +39,7 @@ const Webcam = () => {
       ) : (
         <Image
           width={500}
+          height={375}
           src="https://cdn.dribbble.com/users/2159400/screenshots/8290728/facerecognite_iconanimation.gif"
         />
       )}
@@ -55,8 +56,8 @@ const style = {
   },
   card: {
     position: "relative",
-    width: 500,
     height: 375,
+    width: 500,
     boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
     overflow: "hidden",
   },
@@ -72,7 +73,7 @@ const style = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: 450,
+    width: "90%",
     height: 325,
     backgroundColor: "rgba(0,0,0,0.3)",
   },

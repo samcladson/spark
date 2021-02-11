@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "antd";
 import axios from "axios";
 
@@ -45,7 +45,7 @@ const Home = () => {
         <Col sm={24} md={6}>
           <Progress />
         </Col>
-        <Col sm={24} md={12}>
+        <Col sm={24} md={12} style={{ textAlign: "center" }}>
           <Video />
         </Col>
         <Col sm={24} md={6}>
