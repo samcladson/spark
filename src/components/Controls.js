@@ -1,6 +1,6 @@
 import React from "react";
 import { Progress, Space, Button, Divider } from "antd";
-
+import useWindowDimension from "../utilities/useWindowDimension";
 import { startVideo, stopVideo } from "../utilities/VideoConfig";
 import { checkIn, checkOut, clearEntry } from "../action/entryAction";
 import { useSelector } from "react-redux";
@@ -8,14 +8,25 @@ import { useSelector } from "react-redux";
 const Controls = () => {
   const isVideoPlaying = useSelector((state) => state.Webcam);
   const progressValue = useSelector((state) => state.Progress);
-
+  const windowWidth = useWindowDimension();
   return (
-    <div style={style.container}>
+    <div
+      style={{
+        width: windowWidth.width < 480 ? 350 : "100%",
+        height: "auto",
+        padding: 25,
+        boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
+        borderRadius: "5px",
+      }}
+    >
       <h2>Controls</h2>
       <p>Manage CheckIn / CheckOut here</p>
       <Divider />
       <Space direction="vertical" style={{ width: "100%" }} align="center">
-        <Progress percent={progressValue} type="dashboard" />
+        <Progress
+          percent={progressValue}
+          type={windowWidth.width < 480 ? "line" : "dashboard"}
+        />
         <p>Match Percentage</p>
         {isVideoPlaying ? (
           <Button
@@ -58,16 +69,6 @@ const Controls = () => {
       </Space>
     </div>
   );
-};
-
-const style = {
-  container: {
-    width: "100%",
-    height: "auto",
-    padding: 25,
-    boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
-    borderRadius: "5px",
-  },
 };
 
 export default Controls;

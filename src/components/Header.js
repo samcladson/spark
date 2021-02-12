@@ -1,11 +1,19 @@
 import React from "react";
 import logo from "../images/sietlogo.png";
+import useWindowDimension from "../utilities/useWindowDimension";
 
 const Header = () => {
+  const windowWidth = useWindowDimension();
   return (
     <div style={style.header}>
-      <img src={logo} style={{ width: 50, height: "auto", marginRight: 15 }} />
-      <h2>Sri Shakthi Institute Of Engineering And Technology</h2>
+      <img
+        src={logo}
+        style={{ width: 50, height: "auto", marginRight: 15 }}
+        alt="logo"
+      />
+      {windowWidth.width > 480 ? (
+        <h2>Sri Shakthi Institute Of Engineering And Technology</h2>
+      ) : null}
     </div>
   );
 };

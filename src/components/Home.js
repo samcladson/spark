@@ -36,16 +36,11 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <Row
-        gutter={[12, 12]}
-        style={style.container}
-        justify="center"
-        align="middle"
-      >
-        <Col sm={24} md={6}>
+      <Row style={style.container} justify="center" align="middle">
+        <Col sm={24} md={6} style={{ margin: 0 }}>
           <Progress />
         </Col>
-        <Col sm={24} md={12} style={{ textAlign: "center" }}>
+        <Col sm={24} md={12} style={{ padding: 15, textAlign: "center" }}>
           <Video />
         </Col>
         <Col sm={24} md={6}>

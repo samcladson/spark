@@ -2,7 +2,7 @@ import React from "react";
 import Details from "../components/Details";
 import { Space, Card, Image, Typography } from "antd";
 import { useSelector } from "react-redux";
-
+import useWindowDimension from "../utilities/useWindowDimension";
 const { Title } = Typography;
 
 const Webcam = () => {
@@ -10,23 +10,43 @@ const Webcam = () => {
   const isVideoPLaying = useSelector((state) => state.Webcam);
   const staff = useSelector((state) => state.Staff);
   const progressValue = useSelector((state) => state.Progress);
+  const windowWidth = useWindowDimension();
 
   return (
-    <Space direction="vertical" style={style.constainer}>
+    <div style={style.constainer}>
       {isVideoPLaying ? (
-        <Space
-          direction="vertical"
-          style={{ width: "90%", textAlign: "center" }}
-        >
+        <div>
           {entry ? (
             <Title level={3} type="secondary">
               {entry}
             </Title>
           ) : null}
-          <Card style={style.card}>
-            <video style={style.video} width={500} height={375} />
+          <div
+            style={{
+              position: "relative",
+              height: windowWidth.width < 480 ? 350 : 375,
+              width: windowWidth.width < 480 ? 350 : 500,
+              boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
+              overflow: "hidden",
+            }}
+          >
+            <video
+              style={style.video}
+              width={windowWidth.width < 480 ? 400 : 500}
+              height={windowWidth.width < 480 ? 250 : 375}
+            />
             {progressValue > 50 && progressValue < 95 ? (
-              <div style={style.info}>
+              <div
+                style={{
+                  position: "absolute",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: windowWidth.width < 480 ? 350 : 375,
+                  height: windowWidth.width < 480 ? 350 : 375,
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                }}
+              >
                 <h2 style={{ color: "white" }}>
                   Come little closer..!<br></br>or<br></br>Stand Still and look
                   ath the camera..!
@@ -34,16 +54,16 @@ const Webcam = () => {
               </div>
             ) : null}
             {staff ? <Details /> : null}
-          </Card>
-        </Space>
+          </div>
+        </div>
       ) : (
         <Image
-          width={500}
-          height={375}
+          width={windowWidth.width < 480 ? "100%" : 500}
+          height={windowWidth.width < 480 ? "auto" : 375}
           src="https://cdn.dribbble.com/users/2159400/screenshots/8290728/facerecognite_iconanimation.gif"
         />
       )}
-    </Space>
+    </div>
   );
 };
 
@@ -54,28 +74,12 @@ const style = {
     justifyContent: "center",
     alignItems: "center",
   },
-  card: {
-    position: "relative",
-    height: 375,
-    width: 500,
-    boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 50px 0px",
-    overflow: "hidden",
-  },
   video: {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%,-50%)",
     padding: 10,
-  },
-  info: {
-    position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "90%",
-    height: 325,
-    backgroundColor: "rgba(0,0,0,0.3)",
   },
 };
 
