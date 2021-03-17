@@ -1,6 +1,6 @@
 import React from "react";
 import Details from "../components/Details";
-import { Space, Card, Image, Typography } from "antd";
+import { Image, Typography } from "antd";
 import { useSelector } from "react-redux";
 import useWindowDimension from "../utilities/useWindowDimension";
 const { Title } = Typography;
@@ -35,14 +35,14 @@ const Webcam = () => {
               width={windowWidth.width < 480 ? 400 : 500}
               height={windowWidth.width < 480 ? 250 : 375}
             />
-            {progressValue > 50 && progressValue < 95 ? (
+            {progressValue > 20 && progressValue < 95 ? (
               <div
                 style={{
                   position: "absolute",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  width: windowWidth.width < 480 ? 350 : 375,
+                  width: windowWidth.width < 480 ? 350 : "100%",
                   height: windowWidth.width < 480 ? 350 : 375,
                   backgroundColor: "rgba(0,0,0,0.3)",
                 }}
@@ -58,6 +58,7 @@ const Webcam = () => {
         </div>
       ) : (
         <Image
+          preview={false}
           width={windowWidth.width < 480 ? "100%" : 500}
           height={windowWidth.width < 480 ? "auto" : 375}
           src="https://cdn.dribbble.com/users/2159400/screenshots/8290728/facerecognite_iconanimation.gif"

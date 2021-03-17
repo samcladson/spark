@@ -6,6 +6,7 @@ import Staff from "../reducer/staffReducer";
 import Progress from "../reducer/progressReducer";
 import Status from "../reducer/statusReducer";
 import StaffList from "../reducer/staffListReducer";
+import Auth from "../reducer/AuthReducer";
 
 const store = createStore(
   combineReducers({
@@ -16,6 +17,7 @@ const store = createStore(
     Progress,
     Status,
     StaffList,
+    Auth,
   }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

@@ -78,7 +78,7 @@ const Details = () => {
           alignItems: "center",
         }}
       >
-        <Image width={75} height="auto" src={staff.img} />
+        <Image preview={false} width={75} height="auto" src={staff.img} />
         <div>
           <h1>{staff.Name}</h1>
 
