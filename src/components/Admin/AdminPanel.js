@@ -7,11 +7,12 @@ import {
   QrcodeOutlined,
 } from "@ant-design/icons";
 import Reports from "./Reports";
+import Dashboard from "./Dashboard";
 import { logout } from "../../action/AuthAction";
 import spark_logo from "../../images/sparklogo.jpg";
 
 const Pages = {
-  1: { name: "Dashboard", component: null },
+  1: { name: "Dashboard", component: <Dashboard /> },
   2: { name: "Add Staff", component: null },
   3: { name: "Start Encoding", component: null },
   4: { name: "Generate Reports", component: <Reports /> },
@@ -20,7 +21,7 @@ const Pages = {
 const { Sider, Content, Header } = Layout;
 const AdminPanel = () => {
   const [collapse, setCollapse] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   return (
     <div>
       <Layout style={{ height: "100vh" }}>
