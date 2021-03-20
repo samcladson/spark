@@ -4,7 +4,6 @@ import AdminPanel from "./AdminPanel";
 import { useSelector } from "react-redux";
 const Admin = () => {
   const auth = useSelector((state) => state.Auth);
-
   return auth || sessionStorage.length > 0 ? <AdminPanel /> : <AdminLogin />;
 };
 
