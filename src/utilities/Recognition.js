@@ -22,12 +22,11 @@ export const Recognition = (video) => {
     if (detection) {
       if (
         !detectedFace &&
-        detection.detection.box.width > 175 &&
-        detection.detection.box.height > 175
+        detection.detection.box.width > 125 &&
+        detection.detection.box.height > 125
       ) {
         progress(Math.round(detection.detection._score * 100));
         if (detection.detection._score > 0.95) {
-          console.log(detection.detection);
           progress(100);
           status(1);
           detectedFace = Array.from(detection.descriptor);
@@ -52,7 +51,7 @@ export const Recognition = (video) => {
             });
         }
       } else {
-        progress(Math.floor(Math.random() * 30) + 5);
+        progress(Math.floor(Math.random() * 10) + 25);
       }
     } else {
       progress(0);
